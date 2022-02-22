@@ -28,7 +28,8 @@ $ProgressPreference = 'SilentlyContinue'
 Invoke-WebRequest -Uri https://download.oracle.com/java/17/archive/jdk-17.0.2_windows-x64_bin.zip -OutFile jdk.zip
 
 Write-Host "Extracting runtime"
-Expand-Archive jdk.zip
+$ProgressPreference = 'SilentlyContinue'
+tar -xf jdk.zip
 
 Write-Host "Downloading server"
 $ProgressPreference = 'SilentlyContinue'
@@ -41,12 +42,6 @@ Out-File -FilePath eula.txt -InputObject $eulaStr
 Write-Host "Creating starter script"
 New-Item Start_Server.cmd | Out-Null
 Out-File -FilePath Start_Server.cmd -InputObject $launchStr
-
-#Write-Host "Initializing server"
-#jdk/jdk-17.0.2/bin/java.exe -jar server.jar -nogui | Out-Null
-
-#Write-Host "Cleaning temp files"
-#Remove-Item jdk.zip
 
 Write-Host "Leaving server folder"
 Set-Location ..
